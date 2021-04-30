@@ -2,7 +2,7 @@ FROM debian:buster
 
 MAINTAINER lusehair <lusehair@42.student.fr>
 
-RUN apt-get update && apt-get upgrade 
+RUN apt-get update
 RUN apt-get install -y php7.3-fpm \
     php7.3-common \
     php7.3-mysql \
@@ -20,14 +20,15 @@ RUN apt-get install -y php7.3-fpm \
     wget; 
 RUN	wget https://wordpress.org/latest.tar.gz
 RUN tar xzvf latest.tar.gz
-RUN mv wordpress /var/www/localhost/htdocs 
-RUN chmod 777 -R /var/www/localhost/htdocs/wordpress
+RUN mkdir /var/www
+RUN chmod -R 775  /var/www/
+RUN mv wordpress/ /var/www/wordpress
 RUN rm latest.tar.gz 
-WORKDIR /var/www/localhost/htdocs/wordpress 
-RUN mv /var/www/localhost/htdocs/wordpress/wp-config-sample.php /var/www/localhost/htdocs/wordpress/wp-config.php 
+WORKDIR /var/www/wordpress/
+RUN mv wp-config-sample.php wp-config.php 
 RUN	sed -i "s/database_name_here/wordpress/" wp-config.php
 RUN	sed -i "s/username_here/user1/" wp-config.php
-RUN	sed -i "s/password_here/user1/" wp-config.php
+RUN	sed -i 's/password_here/$MARIA_PASS/' wp-config.php
 RUN	sed -i "s/localhost/mysql-service/" wp-config.php
 RUN	wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN	chmod +x wp-cli.phar

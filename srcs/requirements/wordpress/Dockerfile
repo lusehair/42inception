@@ -4,6 +4,7 @@ MAINTAINER lusehair <lusehair@42.student.fr>
 
 RUN apt-get update
 RUN apt-get install -y php7.3-fpm \
+    nginx \
     php7.3-common \
     php7.3-mysql \
     php7.3-gmp \
@@ -17,13 +18,17 @@ RUN apt-get install -y php7.3-fpm \
     php7.3-zip \
     php7.3-soap \
     php7.3-imap \
-    wget; 
+    wget;
 RUN	wget https://wordpress.org/latest.tar.gz
 RUN tar xzvf latest.tar.gz
-RUN mkdir /var/www
-RUN chmod -R 775  /var/www/
+#RUN mkdir /var/www
+#RUN chmod -R 775  /var/www/
+RUN chown -R www-data:www-data /var/www/*
+RUN chmod -R 755 /var/www/*
 RUN mv wordpress/ /var/www/wordpress
 RUN rm latest.tar.gz 
+COPY srcs/wordpress /var/www/sites-available 
+RUN ln -s /etc/nginx/sites-available/wordpress /etc/nginx/sites-enabled/wordpress
 WORKDIR /var/www/wordpress/
 RUN mv wp-config-sample.php wp-config.php 
 RUN	sed -i "s/database_name_here/wordpress/" wp-config.php
@@ -35,5 +40,5 @@ RUN	chmod +x wp-cli.phar
 RUN	mv wp-cli.phar /usr/local/bin/wp 
 COPY srcs/setup.sh .
 RUN chmod 777 setup.sh
-EXPOSE 3306 
-CMD sh setup.sh 
+EXPOSE 9000
+#CMD sh setup.sh 

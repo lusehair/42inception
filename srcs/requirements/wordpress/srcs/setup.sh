@@ -1,3 +1,7 @@
+systemctl restart nginx 
+wait 3s
+systemctl restart php-fpm7
+
 while true; 
 do 
     wp core install --allow-root --url='https://'$EXT_IP':3306' \

@@ -1,0 +1,21 @@
+server {
+        listen 9000;
+        listen [::]:9000;
+        server_name wordpress ;
+        return 301 https://$server_name$request_uri;
+}
+
+server {
+      
+        root /var/www/wordpress;
+        index index.html index.htm  index.php;
+        server_name wordpress;
+        location / {
+		try_files $uri $uri/ =404;
+	}
+
+        location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+                fastcgi_pass unix:/run/php/php7.3-fpm.sock;
+        }
+}

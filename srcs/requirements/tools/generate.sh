@@ -3,7 +3,10 @@ chmod 777 key.pem
 chmod 777 cert.pem
 
 echo "Copy SSL keys in ftp/nginx/phpmyadmin folders ...\n"
+# cp key.pem srcs/requierements/nginx/srcs; cp cert.pem srcs/requierements/nginx/srcs
+# cp key.pem srcs/requierements/wordpress/srcs; cp cert.pem srcs/requierements/wordpress/srcs 
+
 cp key.pem ../nginx/srcs; cp cert.pem ../nginx/srcs
 cp key.pem ../wordpress/srcs; cp cert.pem ../wordpress/srcs
-
 echo "Copy Done !" 
+

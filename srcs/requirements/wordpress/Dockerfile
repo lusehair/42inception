@@ -28,6 +28,8 @@ RUN chmod -R 755 /var/www/*
 RUN mv wordpress/ /var/www/wordpress
 RUN rm latest.tar.gz 
 COPY srcs/wordpress /var/www/sites-available 
+COPY srcs/key.pem .
+COPY srcs/cert.pem .
 RUN ln -s /etc/nginx/sites-available/wordpress /etc/nginx/sites-enabled/wordpress
 WORKDIR /var/www/wordpress/
 RUN mv wp-config-sample.php wp-config.php 

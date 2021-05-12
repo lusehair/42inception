@@ -1,0 +1,38 @@
+version: '3'
+services:
+    db:
+        image: mariadb:latest
+        volumes:
+            - db_data:/home/user42/data
+        restart: always
+        environment:
+            - MARIA_LOGIN: "${MARIA_LOGIN}"
+            - MARIA_PASS: "${MARIA_PASS}"
+            - WP_IP: "{WP_IP}"
+
+    wordpress:
+        image: wordpress:latest
+        volumes:
+            - wp_data:/home/user42/data
+        restart: always
+        environment:
+            - WP_LOGIN: "${WP_LOGIN}"
+            - WP_PASS: "${WP_PASS}"
+            - WPU_1LOGIN: "${WPU_1LOGIN}"
+            - WPU_2LOGIN: "{WPU_2LOGIN}"
+            - WPU_1PASS: "{WPU_1PASS}"
+            - WPU_2PASS: "{WPU_2PASS}"
+            - MARIA_IP: "{MARIA_IP}" 
+        depends_on:
+            -db
+    nginx:
+        image: nginx:latest
+        restart: always
+        environment:
+            - EXT_IP: "{EXT_IP}"
+            - WP_IP: "{WP_IP}"
+        depends_on:
+            - db
+            - wordpress
+        ports:
+             -"443:443"

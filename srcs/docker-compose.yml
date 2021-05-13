@@ -1,38 +1,71 @@
-version: '3'
+version: '2'
 services:
-    db:
-        image: mariadb:latest
+    mariadb:
+        # image: mariadb:inc
         volumes:
-            - db_data:/home/user42/data
+            - /home/user42/data:/var/lib/mysql
         restart: always
         environment:
-            - MARIA_LOGIN: "${MARIA_LOGIN}"
-            - MARIA_PASS: "${MARIA_PASS}"
-            - WP_IP: "{WP_IP}"
+            MARIA_LOGIN: "${MARIA_LOGIN}"
+            MARIA_PASS: "${MARIA_PASS}"
+            WP_IP: "{WP_IP}"
+        ports: 
+            - "3306:3306"
+        build:
+            context: ./requirements/mariadb
+            dockerfile: Dockerfile 
+        networks:
+            vpcbr:
+                ipv4_address: 172.22.0.2
 
     wordpress:
-        image: wordpress:latest
+        image: wordpress:inc
         volumes:
-            - wp_data:/home/user42/data
+            - /home/user42/data
         restart: always
         environment:
-            - WP_LOGIN: "${WP_LOGIN}"
-            - WP_PASS: "${WP_PASS}"
-            - WPU_1LOGIN: "${WPU_1LOGIN}"
-            - WPU_2LOGIN: "{WPU_2LOGIN}"
-            - WPU_1PASS: "{WPU_1PASS}"
-            - WPU_2PASS: "{WPU_2PASS}"
-            - MARIA_IP: "{MARIA_IP}" 
+            WP_LOGIN: "${WP_LOGIN}"
+            WP_PASS: "${WP_PASS}"
+            WPU_1LOGIN: "${WPU_1LOGIN}"
+            WPU_2LOGIN: "${WPU_2LOGIN}"
+            WPU_1PASS: "${WPU_1PASS}"
+            WPU_2PASS: "${WPU_2PASS}"
+            MARIA_IP: "${MARIA_IP}" 
         depends_on:
-            -db
+            - mariadb
+        ports:
+            - "9000:9000"
+        build:
+            context: ./requirements/mariadb
+            dockerfile: Dockerfile
+        networks:
+            vpcbr:
+                ipv4_address: 172.22.0.3
+        
     nginx:
-        image: nginx:latest
+        image: nginx:inc
         restart: always
         environment:
-            - EXT_IP: "{EXT_IP}"
-            - WP_IP: "{WP_IP}"
+            EXT_IP: "${EXT_IP}"
+            WP_IP: "${WP_IP}"
         depends_on:
-            - db
+            - mariadb
             - wordpress
         ports:
-             -"443:443"
+             - "443:443"
+        build:
+            context: ./requirements/mariadb
+            dockerfile: Dockerfile
+        networks:
+            vpcbr:
+                ipv4_address: 172.22.0.4
+
+    networks:
+        vpcbr:
+            driver: bridge
+            ipam:
+                config:
+                    - subnet: 172.22.0.0/16
+                      gateway: 172.22.0.1
+
+

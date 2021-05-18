@@ -10,8 +10,7 @@ if [ -z "$(ls -A /var/lib/mysql)" ]; then
     echo "GRANT ALL PRIVILEGES ON wordpress.* TO '$MARIA_LOGIN'@'$WP_IP' IDENTIFIED BY '$MARIA_PASS' WITH GRANT OPTION;" | mysql -u root --skip-password
     echo "FLUSH PRIVILEGES;" | mysql -u root --skip-password
     echo "exit;"
-else 
-    service mysql start
 fi
-sleep infinity 
+    service mysql start
+
 

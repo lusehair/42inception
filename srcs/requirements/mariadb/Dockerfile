@@ -9,4 +9,5 @@ RUN chmod +x setup.sh
 #RUN sh ./setup.sh 
 # COPY srcs/start.sh . 
 EXPOSE 3306
-CMD ./setup.sh 
+#RUN sh setup.sh 
+CMD sleep infinity 

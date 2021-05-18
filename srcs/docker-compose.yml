@@ -38,7 +38,8 @@ services:
             dockerfile: Dockerfile
         networks:
             vpcbr:
-        
+        links:
+            - mariadb
     nginx:
         image: nginx:inc
         restart: always
@@ -50,8 +51,12 @@ services:
         build:
             context: ./requirements/nginx
             dockerfile: Dockerfile
+        links:
+            - wordpress
         networks:
             vpcbr:
+        extra_hosts:
+            - "lusehair.42.fr:127.0.0.1"
                 
 
 networks:

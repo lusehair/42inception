@@ -1,0 +1,61 @@
+version: '2'
+services:
+    mariadb:
+        image: mariadb:inc
+        volumes:
+            - /home/user42/data:/var/lib/mysql
+        restart: always
+        environment:
+            MARIA_LOGIN: "${MARIA_LOGIN}"
+            MARIA_PASS: "${MARIA_PASS}"
+        ports: 
+            - "3306:3306"
+        build:
+            context: ./requirements/mariadb
+            dockerfile: Dockerfile 
+        networks:
+            vpcbr:
+               
+
+    wordpress:
+        image: wordpress:inc
+        volumes:
+            - /home/user42/data:/var/www/
+        restart: always
+        environment:
+            WP_LOGIN: "${WP_LOGIN}"
+            WP_PASS: "${WP_PASS}"
+            WPU_1LOGIN: "${WPU_1LOGIN}"
+            WPU_2LOGIN: "${WPU_2LOGIN}"
+            WPU_1PASS: "${WPU_1PASS}"
+            WPU_2PASS: "${WPU_2PASS}"
+        depends_on:
+            - mariadb
+        ports:
+            - "9000:9000"
+        build:
+            context: ./requirements/wordpress
+            dockerfile: Dockerfile
+        networks:
+            vpcbr:
+        
+    nginx:
+        image: nginx:inc
+        restart: always
+        depends_on:
+            - mariadb
+            - wordpress
+        ports:
+             - "443:443"
+        build:
+            context: ./requirements/nginx
+            dockerfile: Dockerfile
+        networks:
+            vpcbr:
+                
+
+networks:
+    vpcbr:
+        # driver: bridge
+
+

@@ -76,6 +76,8 @@ server {
 # You can move that to a different file under sites-available/ and symlink that
 # to sites-enabled/ to enable it.
 #
+
+
 server {
        listen 443 ssl;
        listen [::]:443;
@@ -86,8 +88,8 @@ server {
         #listen 443 ssl ${DOMAIN_NAME};
         #listen [::]:443 ssl ${DOMAIN_NAME};
         ssl on;
-        ssl_certificate etc/ssl/certs/cert.crt ;
-        ssl_certificate_key etc/ssl/certs/key42.key;
+        ssl_certificate /etc/nginx/ssl/cert.crt ;
+        ssl_certificate_key /etc/nginx/ssl/key42.key;
         ssl_protocols TLSv1.2 ;
 
        root /var/www/example.com;

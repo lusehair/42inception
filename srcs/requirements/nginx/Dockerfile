@@ -12,10 +12,10 @@ COPY srcs/default /etc/nginx/sites-available
 RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled
 #RUN rm /etc/nginx/nginx.conf 
 # COPY srcs/index.html /var/www/localhost/htdocs
-RUN openssl req -newkey rsa:4096 -x509 -days 365 -nodes -out /etc/ssl/certs/cert.crt -keyout /etc/ssl/certs/key42.pem -subj "/C=FR/ST=Paris/CN=lusehair"
-RUN chmod 777 /etc/ssl/certs/*
+RUN mkdir /etc/nginx/ssl
+RUN openssl req -newkey rsa:4096 -x509 -days 365 -nodes -out /etc/nginx/ssl/cert.crt -keyout /etc/nginx/ssl/key42.key -subj "/C=FR/ST=Paris/CN=lusehair"
+RUN chmod 777 /etc/nginx/ssl/*
 EXPOSE 443 
 #RUN nginx -g "daemon off;"
-ENTRYPOINT service nginx start ; bash 
-
+CMD sleep infinity 
 

@@ -13,14 +13,14 @@ services:
         build:
             context: ./requirements/mariadb
             dockerfile: Dockerfile 
-        networks:
-            vpcbr:
+        # networks:
+            # vpcbr:
                
 
     wordpress:
         image: wordpress:inc
         volumes:
-            - /home/user42/data:/var/www/
+            - /home/user42/data:/var/www/wordpress
         restart: always
         environment:
             WP_LOGIN: "${WP_LOGIN}"
@@ -36,8 +36,8 @@ services:
         build:
             context: ./requirements/wordpress
             dockerfile: Dockerfile
-        networks:
-            vpcbr:
+        # networks:
+        #     vpcbr:
         links:
             - mariadb
     nginx:
@@ -53,14 +53,14 @@ services:
             dockerfile: Dockerfile
         links:
             - wordpress
-        networks:
-            vpcbr:
+        # networks:
+        #     vpcbr:
         extra_hosts:
             - "lusehair.42.fr:127.0.0.1"
                 
 
-networks:
-    vpcbr:
+# networks:
+#     vpcbr:
         # driver: bridge
 
 

@@ -24,14 +24,15 @@ RUN tar xzvf latest.tar.gz
 #RUN mkdir /var/www
 #RUN chmod -R 775  /var/www/
 
-RUN mv wordpress/ /var/www/wordpress
+RUN mv wordpress /var/www
 RUN chown -R www-data:www-data /var/www/*
 RUN chmod -R 755 /var/www/*
 RUN rm latest.tar.gz 
-COPY srcs/wordpress /var/www/sites-available 
+RUN rm -rf /etc/nginx/sites-enabled/default
+COPY srcs/wordpress /etc/nginx/sites-enabled/
 COPY srcs/key.pem .
 COPY srcs/cert.pem .
-RUN ln -s /etc/nginx/sites-available/wordpress /etc/nginx/sites-enabled/wordpress
+#RUN ln -s /var/www/wordpress/ /etc/nginx/sites-enabled
 COPY srcs/setup.sh /
 RUN chmod 777 /setup.sh
 WORKDIR /var/www/wordpress/

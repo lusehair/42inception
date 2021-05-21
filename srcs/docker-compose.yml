@@ -29,6 +29,8 @@ services:
             WPU_2LOGIN: "${WPU_2LOGIN}"
             WPU_1PASS: "${WPU_1PASS}"
             WPU_2PASS: "${WPU_2PASS}"
+            MARIA_LOGIN: "${MARIA_LOGIN}"
+            MARIA_PASS: "${MARIA_PASS}"
         depends_on:
             - mariadb
         ports:

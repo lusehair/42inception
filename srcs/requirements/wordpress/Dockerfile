@@ -35,7 +35,7 @@ COPY srcs/cert.pem .
 #RUN ln -s /var/www/wordpress/ /etc/nginx/sites-enabled
 COPY srcs/setup.sh /
 RUN chmod 777 /setup.sh
-WORKDIR /var/www/wordpress/
+WORKDIR /var/www/wordpress/wordpress
 # RUN mv wp-config-sample.php wp-config.php 
 # RUN	sed -i "s/database_name_here/wordpress/" wp-config.php
 # RUN	sed -i "s/username_here/user1/" wp-config.php
@@ -45,4 +45,4 @@ RUN	wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
 RUN	chmod +x wp-cli.phar
 RUN	mv wp-cli.phar /usr/local/bin/wp 
 EXPOSE 9000
-CMD /setup.sh 
+CMD sleep infinity

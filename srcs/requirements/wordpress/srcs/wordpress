@@ -1,7 +1,7 @@
 server {
         listen 9000;
         listen [::]:9000;
-        root /var/www/wordpress/;
+        root /var/www/wordpress/wordpress;
         index index.html index.htm  index.php;
         server_name _;
         location / {

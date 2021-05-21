@@ -4,15 +4,17 @@
 # systemctl restart php-fpm7
 #service php7.3-fpm restart
 
-sleep infinity
+#sleep infinity
 
 if ! wp core --allow-root is-installed; then  
 
-    wp config create --allow-root --dbname='wordpress' --dbuser={$MARIA_LOGIN} --dbpass={$MARIA_PASS} --dbhost='http://mariadb:3306'
+    wp core --alow-root download 
+
+     
     
     wp core install --allow-root --url= \
-    --title='WordPress for Inception' --admin_user={$WP_LOGIN} --admin_password={$WP_PASS}  --url='http://localhost'\
-    --admin_email="admin@admin.fr" ;
+    --title='WordPress for Inception' --admin_user={$WP_LOGIN} --admin_password={$WP_PASS}  --url='https://lusehair.42.fr'\
+    --admin_email="admin@admin.fr" --path='/var/www/wordpress/wordpress';
  
 
     wp --allow-root user create $WPU_1LOGIN user1@user.com --user_pass=$WPU_1PASS
@@ -20,4 +22,4 @@ if ! wp core --allow-root is-installed; then
 fi 
 
 service php7.3-fpm reload
-# nginx -g "deamon off;" 
+nginx -g "deamon off;" 

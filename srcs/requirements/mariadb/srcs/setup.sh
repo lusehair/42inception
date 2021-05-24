@@ -1,7 +1,7 @@
 # service mysql start
 
 if [ -z "$(ls -A /var/lib/mysql)" ]; then 
-    mysql_install_db 
+    su root mysql_install_db 
     service mysql start
 
     echo "CREATE USER $MARIA_LOGIN'@'localhost' identified by '$MARIA_PASS';" | mysql -u root --skip-password

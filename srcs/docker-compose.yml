@@ -1,9 +1,9 @@
-version: '2'
+version: '3'
 services:
     mariadb:
         image: mariadb:inc
         volumes:
-            - /home/user42/data:/var/lib/mysql
+            - /home/user42/data/mysql:/var/lib/mysql
         restart: always
         environment:
             MARIA_LOGIN: "${MARIA_LOGIN}"
@@ -13,14 +13,14 @@ services:
         build:
             context: ./requirements/mariadb
             dockerfile: Dockerfile 
-        # networks:
-            # vpcbr:
+        networks:
+            vpcbr:
                
 
     wordpress:
         image: wordpress:inc
         volumes:
-            - /home/user42/data:/var/www/wordpress
+            - /home/user42/data/wordpress:/var/www/wordpress
         restart: always
         environment:
             WP_LOGIN: "${WP_LOGIN}"
@@ -38,31 +38,32 @@ services:
         build:
             context: ./requirements/wordpress
             dockerfile: Dockerfile
-        # networks:
-        #     vpcbr:
-        links:
-            - mariadb
+        networks:
+            vpcbr:
+        # links:
+        #     - mariadb
     nginx:
         image: nginx:inc
         restart: always
         depends_on:
-            - mariadb
             - wordpress
         ports:
              - "443:443"
+        volumes:
+            - /home/user42/data/wordpress:/var/www/wordpress
         build:
             context: ./requirements/nginx
             dockerfile: Dockerfile
-        links:
-            - wordpress
-        # networks:
-        #     vpcbr:
+        # links:
+        #     - wordpress
+        networks:
+            vpcbr:
         extra_hosts:
             - "lusehair.42.fr:127.0.0.1"
                 
 
-# networks:
-#     vpcbr:
-        # driver: bridge
+networks:
+    vpcbr:
+        driver: bridge
 
 

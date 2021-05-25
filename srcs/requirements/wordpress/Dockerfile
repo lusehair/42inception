@@ -20,7 +20,9 @@ RUN apt-get install -y php7.3-fpm \
     wget \
     curl \
     openssl \
-    sendmail; 
+    sendmail \ 
+    mariadb-client \
+    vim;  
 RUN	wget https://wordpress.org/latest.tar.gz
 RUN tar xzvf latest.tar.gz
 

@@ -92,9 +92,9 @@ server {
         ssl_certificate_key /etc/nginx/ssl/key42.key;
         ssl_protocols TLSv1.2 ;
 
-       root /var/www/html;
+       root /var/www/wordpress;
        index index.php;
-
+       autoindex on;
        location / {
        try_files $uri $uri/ /index.php?$args; 
        }

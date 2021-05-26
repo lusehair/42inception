@@ -17,26 +17,28 @@ RUN apt-get install -y php7.3-fpm \
     php7.3-zip \
     php7.3-soap \
     php7.3-imap \
+    php7.3-fpm \
     wget \
     curl \
     openssl \
     sendmail \ 
     mariadb-client \
     vim;  
-RUN	wget https://wordpress.org/latest.tar.gz
-RUN tar xzvf latest.tar.gz
-
-RUN mv wordpress /var/
-RUN rm latest.tar.gz 
-# COPY srcs/key.pem .
-# COPY srcs/cert.pem .
-COPY srcs/setup.sh /
-COPY srcs/wp-config.php /var/wordpress
-RUN chmod 777 /setup.sh
-WORKDIR /var/wordpress
 RUN	wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN	chmod +x wp-cli.phar
 RUN	mv wp-cli.phar /usr/local/bin/wp 
-RUN service php7.3-fpm start
+# COPY srcs/key.pem .
+# COPY srcs/cert.pem .
+RUN mkdir -p /var/wordpress
+RUN chmod 777 /var/wordpress
+RUN mkdir -p /run/php/
+COPY srcs/setup.sh /
+RUN chmod 777 /setup.sh
+
+WORKDIR /var/wordpress
+
+#RUN service php7.3-fpm start
 EXPOSE 9000
-CMD sleep infinity 
+#CMD service php7.3-fpm start 
+CMD  /setup.sh 
+#CMD sleep infinity

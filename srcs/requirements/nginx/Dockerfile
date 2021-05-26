@@ -16,6 +16,6 @@ RUN mkdir /etc/nginx/ssl
 RUN openssl req -newkey rsa:4096 -x509 -days 365 -nodes -out /etc/nginx/ssl/cert.crt -keyout /etc/nginx/ssl/key42.key -subj "/C=FR/ST=Paris/CN=lusehair"
 RUN chmod 777 /etc/nginx/ssl/*
 EXPOSE 443 
-#RUN nginx -g "daemon off;"
-CMD sleep infinity 
+#CMD nginx -g "daemon off;"
+CMD sleep infinity
 

@@ -3,7 +3,7 @@ services:
     mariadb:
         image: mariadb:inc
         volumes:
-            - /home/user42/data/mysql:/var/lib/mysql
+            - ~/data/mysql:/var/lib/mysql
         restart: always
         environment:
             MARIA_LOGIN: "${MARIA_LOGIN}"
@@ -18,9 +18,11 @@ services:
                
 
     wordpress:
+        depends_on:
+            - mariadb
         image: wordpress:inc
         volumes:
-            - /home/user42/data/wordpress:/var/www/wordpress
+            - ~/data/wordpress:/var/wordpress
         restart: always
         environment:
             WP_LOGIN: "${WP_LOGIN}"
@@ -31,8 +33,6 @@ services:
             WPU_2PASS: "${WPU_2PASS}"
             MARIA_LOGIN: "${MARIA_LOGIN}"
             MARIA_PASS: "${MARIA_PASS}"
-        depends_on:
-            - mariadb
         ports:
             - "9000:9000"
         build:
@@ -50,7 +50,7 @@ services:
         ports:
              - "443:443"
         volumes:
-            - /home/user42/data/wordpress:/var/www/wordpress
+            - ~/data/wordpress:/var/www/wordpress
         build:
             context: ./requirements/nginx
             dockerfile: Dockerfile

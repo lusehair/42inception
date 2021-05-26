@@ -18,14 +18,14 @@ echo "${GREEN}Env Values set with success\n${GREEN}"
 echo "${ORANGE}change the hosts file ...\n${ORANGE}" 
 echo '127.0.0.1 lusehair.42.fr' >> /etc/hosts 
 echo '127.0.0.1 www.lusehair.42.fr' >> /etc/hosts 
-echo "${GREEN}Your host file as changed for this project !${GREEN}  ${ORANGE}Don't forget to run le clean script after the correction !${ORANGE}\n" 
+echo "${GREEN}Your host file as changed for this project !${GREEN}  ${ORANGE}Don't forget to run the clean script after the correction !${ORANGE}\n" 
 echo "${ORANGE}Shutdown docker properly ... ${ORANGE}\n" 
 docker-compose down 
 docker system prune 
 echo "${ORANGE}Removing the data folder ...\n${ORANGE}" 
-if [ -d "~/data" ]; then 
+if [ -d "~/data/" ]; then 
 echo "${GREEN}Data folder was found ! it's now clean ${GREEN}\n" 
-rm -rf ~/data 
+rm -rf ~/data/
 fi 
 echo "${ORANGE}restarting Docker service ... ${ORANGE}\n" 
 service docker restart 

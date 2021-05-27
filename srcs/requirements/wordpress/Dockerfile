@@ -27,12 +27,12 @@ RUN apt-get install -y php7.3-fpm \
 RUN	wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN	chmod +x wp-cli.phar
 RUN	mv wp-cli.phar /usr/local/bin/wp 
-# COPY srcs/key.pem .
-# COPY srcs/cert.pem .
+# COPY tools/key.pem .
+# COPY tools/cert.pem .
 RUN mkdir -p /var/wordpress
-RUN chmod 777 /var/wordpress
+RUN chmod 777 -R /var/wordpress
 RUN mkdir -p /run/php/
-COPY srcs/setup.sh /
+COPY tools/setup.sh /
 RUN chmod 777 /setup.sh
 
 WORKDIR /var/wordpress

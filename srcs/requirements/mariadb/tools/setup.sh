@@ -21,6 +21,6 @@ if [ ! -d "/var/lib/mysql/wordpress" ]; then
     #echo "exit;"
     service mysql stop 
 fi
-wait 7
+#wait 7
 
 mysqld

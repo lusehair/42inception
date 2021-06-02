@@ -6,7 +6,7 @@
 
 #sleep infinity
 
-chown -R www-data:www-data /var/wordpress/
+#chown -R www-data:www-data /var/wordpress/
 
 wp core --allow-root download 
 

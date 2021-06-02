@@ -30,7 +30,10 @@ RUN	mv wp-cli.phar /usr/local/bin/wp
 # COPY tools/key.pem .
 # COPY tools/cert.pem .
 RUN echo "listen = 9000" >> /etc/php/7.3/fpm/pool.d/www.conf
+RUN echo "access.log = /var/log/$pool.access.log" >> /etc/php/7.3/fpm/pool.d/www.conf
 RUN mkdir -p /var/wordpress
+RUN chown -R  www-data:www-data /var/wordpress 
+
 RUN chmod 777 /var/wordpress/
 RUN mkdir -p /run/php/
 COPY tools/setup.sh /

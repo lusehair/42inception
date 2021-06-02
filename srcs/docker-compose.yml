@@ -3,7 +3,7 @@ services:
     mariadb:
         image: mariadb:inc
         volumes:
-            - ~/data/mysql:/var/lib/mysql
+            - ~/data/maria:/var/lib/mysql
         restart: always
         environment:
             MARIA_LOGIN: "${MARIA_LOGIN}"
@@ -15,6 +15,7 @@ services:
             dockerfile: Dockerfile 
         networks:
             vpcbr:
+        env_file: .env
                
 
     wordpress:
@@ -22,7 +23,7 @@ services:
             - mariadb
         image: wordpress:inc
         volumes:
-            - ~/data/wordpress:/var/wordpress
+            - ~/data/wp:/var/wordpress
         restart: always
         environment:
             WP_LOGIN: "${WP_LOGIN}"
@@ -42,6 +43,7 @@ services:
             vpcbr:
         # links:
         #     - mariadb
+        env_file: .env
     nginx:
         image: nginx:inc
         restart: always
@@ -50,7 +52,7 @@ services:
         ports:
              - "443:443"
         volumes:
-            - ~/data/wordpress:/var/www/wordpress
+            - ~/data/wp:/var/www/wordpress
         build:
             context: ./requirements/nginx
             dockerfile: Dockerfile
@@ -60,10 +62,23 @@ services:
             vpcbr:
         extra_hosts:
             - "lusehair.42.fr:127.0.0.1"
-                
+        env_file: .env
 
 networks:
     vpcbr:
         driver: bridge
 
+# volumes: 
+#     wp_local:
+#         driver: local
+#         driver_opts:
+#             type: 'none'
+#             o: 'bind'
+#             device: 'home/user42/data/wp/'
+#     maria_local:
+#         driver: local
+#         driver_opts:
+#             type: 'none'
+#             o: 'bind'
+#             device: '/home/user42/data/maria/' 
 

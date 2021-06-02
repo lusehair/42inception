@@ -6,7 +6,9 @@
 
 #sleep infinity
 
-    wp core --allow-root download 
+chown -R www-data:www-data /var/wordpress/
+
+wp core --allow-root download 
 
 sleep 5;
 while  [ ! -f /var/wordpress/wp-config.php ]; do   

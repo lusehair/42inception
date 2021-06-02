@@ -20,7 +20,7 @@ setup:
 			@echo "${RED}Please, run the Makefile as root.${RED}"
 			exit 1
 		fi
-		@echo "${YELLOW} Stopping local services ...${YELLOQ "
+		@echo "${YELLOW} Stopping local services ...${YELLOW}"
 		@service stop nginx; @service stop mysql; 
 		@echo '127.0.0.1 lusehair.42.fr' >> /etc/hosts;
 		@echo '127.0.0.1 www.lusehair.42.fr' >> /etc/hosts; 

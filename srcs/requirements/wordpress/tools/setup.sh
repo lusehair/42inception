@@ -8,7 +8,7 @@
 
     wp core --allow-root download 
 
-
+sleep 5;
 while  [ ! -f /var/wordpress/wp-config.php ]; do   
 
     # while true; do 

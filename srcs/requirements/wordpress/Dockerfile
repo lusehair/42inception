@@ -31,15 +31,15 @@ RUN	mv wp-cli.phar /usr/local/bin/wp
 # COPY tools/cert.pem .
 RUN echo "listen = 9000" >> /etc/php/7.3/fpm/pool.d/www.conf
 RUN echo "access.log = /var/log/$pool.access.log" >> /etc/php/7.3/fpm/pool.d/www.conf
-RUN mkdir -p /var/wordpress
-RUN chown -R  www-data:www-data /var/wordpress 
+RUN mkdir -p /var/www/wordpress 
+RUN chown -R  www-data:www-data /var/www/wordpress/
 
-RUN chmod 777 /var/wordpress/
+RUN chmod 777 /var/www/wordpress/
 RUN mkdir -p /run/php/
 COPY tools/setup.sh /
 RUN chmod 777 /setup.sh
 
-WORKDIR /var/wordpress
+WORKDIR /var/www/wordpress
 
 #RUN service php7.3-fpm start
 EXPOSE 9000

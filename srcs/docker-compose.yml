@@ -23,7 +23,7 @@ services:
             - mariadb
         image: wordpress:inc
         volumes:
-            - ~/data/wp:/var/wordpress
+            - ~/data/wp:/var/www/wordpress
         restart: always
         environment:
             WP_LOGIN: "${WP_LOGIN}"

@@ -8,9 +8,9 @@ RUN rm /etc/nginx/sites-available/default
 RUN rm /etc/nginx/sites-enabled/default
 #RUN rm /etc/hosts 
 #COPY tools/hosts /etc
-COPY tools/nginx.conf /etc/nginx/nginx.conf 
+COPY tools/nginx.conf /etc/nginx/sites-available/default  
 #COPY tools/default /etc/nginx/sites-available
-RUN ln -s /etc/var/www/wordpress /etc/nginx/sites-enabled
+RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 #RUN rm /etc/nginx/nginx.conf 
 # COPY tools/index.html /var/www/localhost/htdocs
 RUN mkdir /etc/nginx/ssl
@@ -19,6 +19,6 @@ RUN chmod 777 /etc/nginx/ssl/*
 RUN chmod 777 -R /var/www 
 #RUN chown -R nginx:nginx /var/www/wordpress 
 EXPOSE 443 
-CMD nginx -g "daemon off;"
-#CMD sleep infinity
+#CMD nginx -g "daemon off;"
+CMD sleep infinity
 

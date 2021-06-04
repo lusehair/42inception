@@ -1,48 +1,23 @@
-# Colors
-GREY=$'\x1b[30m'
-RED=$'\x1b[31m'
-GREEN=$'\x1b[32m'
-YELLOW=$'\x1b[33m'
-BLUE=$'\x1b[34m'
-PURPLE=$'\x1b[35m'
-CYAN=$'\x1b[36m'
-WHITE=$'\x1b[37m
-
-
-
 NAME = inception
-START_PATH = srcs 
+START_PATH = ./srcs/
 
+all: purge setup reload
 
 setup:
-		
-		@if ! [ "$(shll id -u)" = 0 ]; then 
-			@echo "${RED}Please, run the Makefile as root.${RED}"
-			exit 1
-		fi
-		@echo "${YELLOW} Stopping local services ...${YELLOW}"
-		@service stop nginx; @service stop mysql; 
-		@echo '127.0.0.1 lusehair.42.fr' >> /etc/hosts;
-		@echo '127.0.0.1 www.lusehair.42.fr' >> /etc/hosts; 
-
+	@ cd $(START_PATH)/requirements/tools && sudo sh launchpad.sh
+	
 stop:
-		docker-compose down $(START_PATH); 
+	@ cd $(START_PATH) && docker-compose down; 
 
 clean: stop
-		@docker rm $$(docker ps -aq); 
-		@docker system prune; 
+	@ cd $(START_PATH) && docker system prune; 
 
 purge: clean
-	
-		
-		rm -Rf ~/data/;
+	@ sudo rm -Rf ~/data/;
 
 reload: 
-		service docker restart; 
-		docker-compose up --build $(START_PATH); 
+	@ cd $(START_PATH) &&  docker-compose up --build ; 
 
-all: $(NAME)
-
-$(NAME): setup reload 
+ 
 
 .PHONY: setup stop clean purge reload all 

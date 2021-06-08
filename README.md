@@ -23,7 +23,7 @@ Dans les faits, ça ressemble à quoi Docker Compose ?
 ### À quoi ressemble un docker-compose.yml ?
 
 ```yaml
-```yaml
+
 le_nom_du_service:
         image: le_nom_del'image:sontag
         volumes: <-- si vous voulez des données persistentes 
@@ -40,8 +40,8 @@ le_nom_du_service:
             dockerfile: Le nom du Dockerfile en question 
 					env_file: comme son nom l'indique. 
         
-```
-```
+```yaml 
+
 
 ### Des trucs comme ça :
 
